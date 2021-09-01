@@ -1,0 +1,1 @@
+nohup dart ./example/example.dart > log.log 2>&1 &
