@@ -281,12 +281,17 @@ class ShelfPubServer {
       String readMePath;
       if (repository != null && repository.local != null && repository.local.baseDir != null) {
         var dir = repository.local.baseDir;
-        readMePath = p.join(dir, version.packageName, version.versionString, 'README.md');
+        if (packageVersions.last == version) {
+          readMePath = p.join(dir, version.packageName, version.versionString, 'README.md');
+          if (!File(readMePath).existsSync()) {
+            readMePath = null;
+          }
+        }
       }
       return {
         'archive_url': '${_downloadUrl(uri, version.packageName, version.versionString)}',
         'pubspec': loadYaml(version.pubspecYaml),
-        'readme': readMePath == null ? '' : File(readMePath).readAsStringSync(),
+        'readme': readMePath == null ? '# 未找到README.md,请在项目根目录添加文件' : File(readMePath).readAsStringSync(),
         'version': version.versionString,
         'time': version.time,
       };
