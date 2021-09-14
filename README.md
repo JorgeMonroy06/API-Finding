@@ -2,6 +2,15 @@
 ### 客户端使用
 
 > 0. 发布仓库前,先配置你项目中的pubspec.yaml文件,添加 publish_to: http://ip:port 这一行,指定你的私有库地址
+
+确保你能连上google.com,需要设置代理的可以参考如下设置,打开命令行,输入如下命令设置代理
+
+```
+set HTTPS_PROXY=http://127.0.0.1:port
+set HTTP_PROXY=http://127.0.0.1:port
+```
+
+
 > 1. 发布仓库, (仓库名称最好不要和pub.dev上的重名)在项目根目录执行 pub publish 等待提示操作,按y就可以等待上传了
 > 2. 如何查看仓库是否发布成功, 查看部署的web地址,或者调用 http://ip:port/api/getAllPackages 如果能查询到你的仓库和对应的版本则代表发布成功
 
