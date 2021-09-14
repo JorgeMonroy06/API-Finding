@@ -3,9 +3,9 @@
 
 > 0. 发布仓库前,先配置你项目中的pubspec.yaml文件,添加 publish_to: http://ip:port 这一行,指定你的私有库地址
 > 1. 发布仓库, (仓库名称最好不要和pub.dev上的重名)在项目根目录执行 pub publish 等待提示操作,按y就可以等待上传了
-> 3. 如何查看仓库是否发布成功, 查看部署的web地址,或者调用 http://ip:port/api/getAllPackages 如果能查询到你的仓库和对应的版本则代表发布成功
+> 2. 如何查看仓库是否发布成功, 查看部署的web地址,或者调用 http://ip:port/api/getAllPackages 如果能查询到你的仓库和对应的版本则代表发布成功
 
-> 4. 上传成功之后如何依赖:
+> 3. 上传成功之后如何依赖:
 ```
   plugin_name:
     hosted:
@@ -15,9 +15,9 @@
     //注意version要与hosted对齐
 ```
 
-> 5. pub get 成功之后,下载的库默认会放在 flutter-sdk目录/.pub-cache/hosted/服务器ip:端口/
+> 4. pub get 成功之后,下载的库默认会放在 flutter-sdk目录/.pub-cache/hosted/服务器ip:端口/
 
-> 6. 常用API:
+> 5. 常用API:
 
 ```
 http://ip:port/api/getAllPackages  //获取所有可用库的名称, 以及最新版本
