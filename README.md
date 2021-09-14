@@ -1,29 +1,8 @@
 
 ### 客户端使用
 
-
-如果你的terimal能翻墙,直接看step2
-
-> 0. terimal执行 git clone [https://github.com/ameryzhu/pub](https://github.com/ameryzhu/pub) 下载pub这个库
-```
-cd 到 pub 仓库目录, 执行
-
-pub get
-
-dart --snapshot=personalpub.dart.snapshot ./bin/pub.dart 
-
-把生成好的personalpub.dart.snapshot 文件保存好
-```
-
-> 1. 将personalpub.dart.snapshot 拷贝到 flutter sdk目录/bin/cache/dart-sdk/bin/snapshots 文件夹下,然后打开flutter-sdk目录/bin/cache/dart-sdk/bin/文件夹下的pub.bat 文件,将pub.bat文件拷贝一份出来换个名字,比如换成ppub.bat,然后修改ppub.bat文件里的pub.dart.snapshot换成personalpub.dart.snapshot,后续发布仓库则需要使用ppub命令,正常的更新项目使用pub (Mac或者linux系统应该修改pub.sh 而不是pub.bat)
-
-```desc
-
-为什么要替换, 因为默认情况下发布仓库需要走 google auth 授权, 需要科学上网, 替换的 shapshot 则把授权的逻辑给去掉 
-
-```
-> 2. 发布仓库, (仓库名称最好不要和pub.dev上的重名)在项目根目录执行 ppub publish --server=http://ip:port  等待提示, 操作 (ppub命令指向的是刚刚你复制pub.bat重命名的那个文件,如果没有复制,那就使用pub)
-
+> 0. 发布仓库前,先配置你项目中的pubspec.yaml文件,添加 publish_to: http://ip:port 这一行,指定你的私有库地址
+> 1. 发布仓库, (仓库名称最好不要和pub.dev上的重名)在项目根目录执行 pub publish 等待提示操作,按y就可以等待上传了
 > 3. 如何查看仓库是否发布成功, 查看部署的web地址,或者调用 http://ip:port/api/getAllPackages 如果能查询到你的仓库和对应的版本则代表发布成功
 
 > 4. 上传成功之后如何依赖:
@@ -32,7 +11,8 @@ dart --snapshot=personalpub.dart.snapshot ./bin/pub.dart
     hosted:
       name: plugin_name
       url: http://ip:port
-      version: ^lastedVersion
+    version: ^lastedVersion
+    //注意version要与hosted对齐
 ```
 
 > 5. pub get 成功之后,下载的库默认会放在 flutter-sdk目录/.pub-cache/hosted/服务器ip:端口/
