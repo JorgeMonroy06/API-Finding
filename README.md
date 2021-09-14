@@ -71,6 +71,8 @@ ArgParser argsParser() {
 
 > 5. 运行后日志会保存在当前目录下的log.log文件,可自行查看
 
+### web端部署
+查看 https://github.com/jiang111/flutter_pub_web 导出静态文件,然后部署在web服务器即可, 具体操作参考flutter web相关构建方法
 
 
 [![Stargazers over time](https://starchart.cc/jiang111/pub_server.svg)](https://starchart.cc/jiang111/pub_server)
