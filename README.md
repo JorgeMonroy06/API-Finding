@@ -3,7 +3,7 @@
 
 > 0. 发布仓库前,先配置你项目中的pubspec.yaml文件,添加 publish_to: http://ip:port 这一行,指定你的私有库地址
 
-确保你能连上google.com,需要设置代理的可以参考如下设置,打开命令行,输入如下命令
+确保你能连上google.com,需要设置代理的可以参考如下命令,在命令行里输入,只对当前窗口生效
 
 ```
 set HTTPS_PROXY=http://127.0.0.1:port
