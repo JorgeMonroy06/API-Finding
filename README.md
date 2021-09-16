@@ -23,7 +23,9 @@ dart --version
 > 3. 如何查看仓库是否发布成功, 查看部署的web地址,或者调用 http://ip:port/api/getAllPackages 如果能查询到你的仓库和对应的版本则代表发布成功
 
 > 4. 上传成功之后如何依赖:
-	package_name:
+
+```
+  package_name:
     hosted:
       name: plugin_name
       url: http://ip:port
