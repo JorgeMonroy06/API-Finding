@@ -1,31 +1,34 @@
 
 ### 客户端使用
 
-> 0. 发布仓库前,先配置你项目中的pubspec.yaml文件,添加 publish_to: http://ip:port 这一行,指定你的私有库地址
-
-确保你能连上google.com,需要设置代理的可以参考如下命令,在命令行里输入,只对当前窗口生效
+## 注意: 如果你平时会上传package到google三方库上,直接从step 2开始看,相信你肯定知道怎么设置terminal走代理
 
 ```
-set HTTPS_PROXY=http://127.0.0.1:port
-set HTTP_PROXY=http://127.0.0.1:port
+打开命令行输入:
+
+dart --version
 ```
 
+查看你当前版本,并去 https://github.com/jiang111/pub/tree/master/version 这个地址找对应的pub.dart.snapshot文件
+下载下来,如果没有,可以提issue,最低支持2.14.0
 
-> 1. 发布仓库, (仓库名称最好不要和pub.dev上的重名)在项目根目录执行 pub publish 等待提示操作,按y就可以等待上传了
-> 2. 如何查看仓库是否发布成功, 查看部署的web地址,或者调用 http://ip:port/api/getAllPackages 如果能查询到你的仓库和对应的版本则代表发布成功
+> 1. 将pub.dart.snapshot 拷贝到 flutter sdk目录/bin/cache/dart-sdk/bin/snapshots 文件夹下,直接覆盖掉原先的pub.dart.snapshot
 
-> 3. 上传成功之后如何依赖:
+```desc
+为什么要替换, 因为默认情况下发布仓库需要走 google auth 授权, 需要科学上网, 替换的 shapshot 则把授权的逻辑给去掉 
 ```
-  plugin_name:
+
+> 2. 在pubspec.yaml文件添加: publish_to: http://私服ip:port, 然后发布仓库, (仓库名称最好不要和pub.dev上的重名)在项目根目录执行 pub publish 等待提示, 操作按y上传
+
+> 3. 如何查看仓库是否发布成功, 查看部署的web地址,或者调用 http://ip:port/api/getAllPackages 如果能查询到你的仓库和对应的版本则代表发布成功
+
+> 4. 上传成功之后如何依赖:
+	package_name:
     hosted:
       name: plugin_name
       url: http://ip:port
     version: ^lastedVersion
-    //注意version要与hosted对齐
 ```
-
-> 4. pub get 成功之后,下载的库默认会放在 flutter-sdk目录/.pub-cache/hosted/服务器ip:端口/
-
 > 5. 常用API:
 
 ```
@@ -38,7 +41,7 @@ http://ip:port/api/packages/<package-name>/versions/<version-name> //获取 pack
 http://ip:port/packages/<package-name>/versions/<version-name>.tar.gz //下载指定库的指定版本
 ```
 
-> 7. GUI页面部署参考https://github.com/jiang111/flutter_pub_web
+> 6. GUI页面部署参考https://github.com/jiang111/flutter_pub_web
 
 ### 服务端部署
 
