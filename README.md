@@ -12,7 +12,7 @@ dart --version
 查看你当前版本,并去 https://github.com/jiang111/pub/tree/master/version 这个地址找对应的pub.dart.snapshot文件
 下载下来,如果没有,可以提issue,最低支持2.14.0
 
-> 1. 将pub.dart.snapshot 拷贝到 flutter sdk目录/bin/cache/dart-sdk/bin/snapshots 文件夹下,重命名一下,然后复制sdk目录/bin/cache/dart-sdk/bin/pub.bat文件,重新命名,然后修改里面的内容,将pub.dart.snapshot改为你重命名snapshots的名称,后续发布到私服时,pub需要替换成你重新命名的pub.bat文件名(比如:pub.bat 被你复制改为ppub.bat 那么后续发私服需要使用ppub 替代pub)
+> 1. 将pub.dart.snapshot 拷贝到 flutter sdk目录/bin/cache/dart-sdk/bin/snapshots 文件夹下,替换源文件
 
 
 ```desc
