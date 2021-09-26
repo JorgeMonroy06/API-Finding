@@ -158,7 +158,9 @@ class ShelfPubServer {
         for (var package in list) {
           var packageVersions = await repository.versions(package).toList();
           if (packageVersions.isEmpty) {
-            return shelf.Response.notFound(null);
+            return shelf.Response.notFound(null, headers: {
+              'accept': 'application/vnd.pub.v2+json',
+            });
           }
 
           packageVersions.sort((a, b) => a.version.compareTo(b.version));
@@ -201,7 +203,9 @@ class ShelfPubServer {
 
       if (path == '/api/packages/versions/new') {
         if (!repository.supportsUpload) {
-          return shelf.Response.notFound(null);
+          return shelf.Response.notFound(null, headers: {
+            'accept': 'application/vnd.pub.v2+json',
+          });
         }
 
         if (repository.supportsAsyncUpload) {
@@ -213,7 +217,9 @@ class ShelfPubServer {
 
       if (path == '/api/packages/versions/newUploadFinish') {
         if (!repository.supportsUpload) {
-          return shelf.Response.notFound(null);
+          return shelf.Response.notFound(null, headers: {
+            'accept': 'application/vnd.pub.v2+json',
+          });
         }
 
         if (repository.supportsAsyncUpload) {
@@ -225,13 +231,17 @@ class ShelfPubServer {
     } else if (request.method == 'POST') {
       if (path == '/api/packages/versions/newUpload') {
         if (!repository.supportsUpload) {
-          return shelf.Response.notFound(null);
+          return shelf.Response.notFound(null, headers: {
+            'accept': 'application/vnd.pub.v2+json',
+          });
         }
 
         return _uploadSimple(request.requestedUri, request.headers['content-type'], request.read());
       } else {
         if (!repository.supportsUploaders) {
-          return shelf.Response.notFound(null);
+          return shelf.Response.notFound(null, headers: {
+            'accept': 'application/vnd.pub.v2+json',
+          });
         }
 
         var addUploaderMatch = _addUploaderRegexp.matchAsPrefix(path);
@@ -244,7 +254,9 @@ class ShelfPubServer {
       }
     } else if (request.method == 'DELETE') {
       if (!repository.supportsUploaders) {
-        return shelf.Response.notFound(null);
+        return shelf.Response.notFound(null, headers: {
+          'accept': 'application/vnd.pub.v2+json',
+        });
       }
 
       //禁止移除操作
@@ -255,7 +267,9 @@ class ShelfPubServer {
       //   return removeUploader(package, user);
       // }
     }
-    return shelf.Response.notFound(null);
+    return shelf.Response.notFound(null, headers: {
+      'accept': 'application/vnd.pub.v2+json',
+    });
   }
 
   // Metadata handlers.
@@ -322,7 +336,9 @@ class ShelfPubServer {
   Future<shelf.Response> _showVersion(Uri uri, String package, String version) async {
     var ver = await repository.lookupVersion(package, version);
     if (ver == null) {
-      return shelf.Response.notFound(null);
+      return shelf.Response.notFound(null, headers: {
+        'accept': 'application/vnd.pub.v2+json',
+      });
     }
 
     // TODO: Add legacy entries (if necessary), such as version_url.
@@ -343,7 +359,12 @@ class ShelfPubServer {
     }
 
     var stream = await repository.download(package, version);
-    return shelf.Response.ok(stream);
+    return shelf.Response.ok(
+      stream,
+      headers: {
+        'accept': 'application/vnd.pub.v2+json',
+      },
+    );
   }
 
   // Upload async handlers.
@@ -429,11 +450,15 @@ class ShelfPubServer {
         await cache.invalidatePackageData(version.packageName);
       }
       _logger.info('Redirecting to found url.');
-      return shelf.Response.found(_finishUploadSimpleUrl(uri));
+      return shelf.Response.found(_finishUploadSimpleUrl(uri), headers: {
+        'accept': 'application/vnd.pub.v2+json',
+      });
     } catch (error, stack) {
       _logger.warning('Error occured', error, stack);
       // TODO: Do error checking and return error codes?
-      return shelf.Response.found(_finishUploadSimpleUrl(uri, error: error.toString()));
+      return shelf.Response.found(_finishUploadSimpleUrl(uri, error: error.toString()), headers: {
+        'accept': 'application/vnd.pub.v2+json',
+      });
     }
   }
 
@@ -490,26 +515,39 @@ class ShelfPubServer {
         body: convert.json.encode({
           'success': {'message': message}
         }),
-        headers: {'content-type': 'application/json'});
+        headers: {
+          'content-type': 'application/json',
+          'accept': 'application/vnd.pub.v2+json',
+        });
   }
 
   shelf.Response _unauthorizedRequest() => shelf.Response(403,
-      body: convert.json.encode({
-        'error': {'message': 'Unauthorized request.'}
-      }),
-      headers: {'content-type': 'application/json'});
+          body: convert.json.encode({
+            'error': {'message': 'Unauthorized request.'}
+          }),
+          headers: {
+            'content-type': 'application/json',
+            'accept': 'application/vnd.pub.v2+json',
+          });
 
   shelf.Response _badRequest(String message) => shelf.Response(400,
-      body: convert.json.encode({
-        'error': {'message': message}
-      }),
-      headers: {'content-type': 'application/json'});
+          body: convert.json.encode({
+            'error': {'message': message}
+          }),
+          headers: {
+            'content-type': 'application/json',
+            'accept': 'application/vnd.pub.v2+json',
+          });
 
-  shelf.Response _binaryJsonResponse(List<int> d, {int status = 200}) =>
-      shelf.Response(status, body: Stream.fromIterable([d]), headers: {'content-type': 'application/json'});
+  shelf.Response _binaryJsonResponse(List<int> d, {int status = 200}) => shelf.Response(status, body: Stream.fromIterable([d]), headers: {
+        'content-type': 'application/json',
+        'accept': 'application/vnd.pub.v2+json',
+      });
 
-  shelf.Response _jsonResponse(Map json, {int status = 200}) =>
-      shelf.Response(status, body: convert.json.encode(json), headers: {'content-type': 'application/json'});
+  shelf.Response _jsonResponse(Map json, {int status = 200}) => shelf.Response(status, body: convert.json.encode(json), headers: {
+        'content-type': 'application/json',
+        'accept': 'application/vnd.pub.v2+json',
+      });
 
   // Download urls.
 
