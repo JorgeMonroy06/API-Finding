@@ -95,6 +95,7 @@ ArgParser argsParser() {
 ### 注意
 
 >* 没有直接依赖的三方库,不要引用它的代码
+>* 不要使用dependency_overrides
 >* 文件名长度不能超过100个英文字符,字符长度从项目根目录算起
 
 
