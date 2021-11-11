@@ -12,9 +12,9 @@ import 'package:yaml/yaml.dart';
 
 /// @author newtab on 2021/11/10
 
-/// 这个文件的文件名不要改,写死的,运行下面的main方法就可以发包了
+/// 运行下面的main方法就可以发包了
 ///本文件只能放在2级目录,最好不要放在 test 和 lib 目录下,可以新建个 pub 文件夹放进去,所需依赖放在 dev_dependencies 下面
-///代码同步更新地址: https://gist.github.com/jiang111/4bcf319ff8654db01ca7746c6734bf8b
+///代码同步更新地址: https://github.com/jiang111/pub_server/edit/master/pub_publisher/lib/pub_publisher.dart
 /// yaml: ^3.1.0
 /// http: ^0.13.3
 /// tar: ^0.5.1
