@@ -14,7 +14,7 @@ import 'package:yaml/yaml.dart';
 
 /// 使用前先看完注释
 /// 发包方式:
-/// 1. 下载https://github.com/jiang111/pub_server/blob/master/pub_publisher/bin/publite.exe这个文件,命令行执行 publite.exe E:\coding\myProject发包
+/// 1. win用户下载https://github.com/jiang111/pub_server/blob/master/pub_publisher/bin/publite.exe这个文件,命令行执行 publite.exe E:\coding\myProject发包
 /// 1.1 把下载的publite文件目录添加到环境变量,命令行执行 publite E:\coding\myProject发包
 /// 2. 下载本源码,在dev_dependencies下添加下面的依赖,pub get,运行下面的main方法就可以发包了
 /// 2种发包方式特点:第1种不依赖具体项目,任意项目都可以直接发包,第二种需要把源码集成到具体项目中才可以发包
