@@ -1,9 +1,23 @@
 
+### 文件夹架构
+|文件夹名|作用|
+|--|--|
+|flutter_pub_web|私服web端源码|
+|pub_publisher|向私服发包源码|
+|pub_server|私服后端源码|
+
+
 ### 客户端使用
 
 > 1. 在pubspec.yaml文件添加: publish_to: http://私服ip:port
 
->2. 将这个链接的代码复制到项目中 https://gist.github.com/jiang111/4bcf319ff8654db01ca7746c6734bf8b 运行这个文件
+>2. windows用户下载[文件](https://github.com/jiang111/pub_server/blob/master/pub_publisher/bin/publite.exe),在命令行执行这个文件,比如:
+
+```
+publite.exe E:\coding\my_app
+```
+
+>2. 或者将这个链接的代码复制到项目中 https://github.com/jiang111/pub_server/blob/master/pub_publisher/lib/pub_publisher.dart 运行这个文件
 
 
 > 3. 如何查看仓库是否发布成功, 查看部署的web地址,或者调用 http://ip:port/api/getAllPackages 如果能查询到你的仓库和对应的版本则代表发布成功
@@ -29,7 +43,7 @@ http://ip:port/api/packages/<package-name>/versions/<version-name> //获取 pack
 http://ip:port/packages/<package-name>/versions/<version-name>.tar.gz //下载指定库的指定版本
 ```
 
-> 6. GUI页面部署参考https://github.com/jiang111/flutter_pub_web
+> 6. GUI页面部署参考https://github.com/jiang111/pub_server/tree/master/flutter_pub_web
 
 ### 服务端部署
 
@@ -72,7 +86,7 @@ ArgParser argsParser() {
 > 5. 运行后日志会保存在当前目录下的log.log文件,可自行查看
 
 ### web端部署
-查看 https://github.com/jiang111/flutter_pub_web 导出静态文件,然后部署在web服务器即可, 具体操作参考flutter web相关构建方法
+查看 https://github.com/jiang111/pub_server/tree/master/flutter_pub_web 导出静态文件,然后部署在web服务器即可, 具体操作参考flutter web相关构建方法
 
 
 [![Stargazers over time](https://starchart.cc/jiang111/pub_server.svg)](https://starchart.cc/jiang111/pub_server)
