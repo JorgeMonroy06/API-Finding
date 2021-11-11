@@ -6,7 +6,7 @@
 >2. windows用户下载[文件](https://github.com/jiang111/pub_server/blob/master/pub_publisher/bin/publite.exe),在命令行执行这个文件,比如:
 
 ```
-publite E:\coding\my_app
+publite.exe E:\coding\my_app
 ```
 
 >2. 或者将这个链接的代码复制到项目中 https://github.com/jiang111/pub_server/blob/master/pub_publisher/lib/pub_publisher.dart 运行这个文件
