@@ -12,12 +12,18 @@ import 'package:yaml/yaml.dart';
 
 /// @author newtab on 2021/11/10
 
-/// 运行下面的main方法就可以发包了
-///本文件只能放在2级目录,最好不要放在 test 和 lib 目录下,可以新建个 pub 文件夹放进去,所需依赖放在 dev_dependencies 下面
-///代码同步更新地址: https://github.com/jiang111/pub_server/edit/master/pub_publisher/lib/pub_publisher.dart
+/// 使用前先看完注释
+/// 发包方式:
+/// 1. 下载https://github.com/jiang111/pub_server/blob/master/pub_publisher/bin/publite.exe这个文件,命令行执行 publite.exe E:\coding\myProject发包
+/// 1.1 把下载的publite文件目录添加到环境变量,命令行运行 publite E:\coding\myProject发包
+/// 2. 下载本源码,在dev_dependencies下添加下面的依赖,pub get,运行下面的main方法就可以发包了
+/// 需要如下依赖
 /// yaml: ^3.1.0
 /// http: ^0.13.3
 /// tar: ^0.5.1
+/// 本文件只能放在2级目录,最好不要放在 test 和 lib 目录下,可以新建个 pub 文件夹放进去
+///代码同步更新地址: https://github.com/jiang111/pub_server/edit/master/pub_publisher/lib/pub_publisher.dart
+
 void main(List<String> args) {
   String rootDir = '';
   if (args.length > 0) {
