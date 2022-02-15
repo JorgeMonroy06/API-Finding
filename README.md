@@ -12,7 +12,7 @@
 
 > 1. 在pubspec.yaml文件添加: publish_to: http://私服ip:port
 
->2. windows/mac/linux用户下载[文件](https://github.com/jiang111/pub_server/raw/master/pub_publisher/bin/publite),在命令行执行这个文件,比如:
+>2. windows用户下载[文件](https://github.com/jiang111/pub_server/raw/master/pub_publisher/bin/publite.exe),在命令行执行这个文件,比如:
 
 ```
 publite E:\coding\my_app
