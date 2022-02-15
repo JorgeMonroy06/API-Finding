@@ -12,11 +12,13 @@
 
 > 1. 在pubspec.yaml文件添加: publish_to: http://私服ip:port
 
->2. windows用户下载[文件](https://github.com/jiang111/pub_server/blob/master/pub_publisher/bin/publite.exe),在命令行执行这个文件,比如:
+>2. windows/mac/linux用户下载[文件](https://github.com/jiang111/pub_server/blob/master/pub_publisher/bin/publite),在命令行执行这个文件,比如:
 
 ```
-publite.exe E:\coding\my_app
+publite E:\coding\my_app
 ```
+
+建议把publite添加到环境变量
 
 >2. 或者将这个链接的代码复制到项目中 https://github.com/jiang111/pub_server/blob/master/pub_publisher/lib/pub_publisher.dart 运行这个文件
 
