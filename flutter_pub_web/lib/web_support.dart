@@ -1,11 +1,5 @@
-import 'dart:html' as html;
-import 'dart:math';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
-import 'package:markdown/markdown.dart';
-
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 int tempRandomValue = 10;
 
@@ -14,27 +8,18 @@ class WebView extends StatefulWidget {
   final double width;
   final double height;
 
-  WebView(this.markdown,this.width,this.height);
+  WebView(this.markdown, this.width, this.height);
 
   @override
   _WebViewState createState() => _WebViewState();
 }
 
-class _WebViewState extends State<WebView> with AutomaticKeepAliveClientMixin{
+class _WebViewState extends State<WebView> with AutomaticKeepAliveClientMixin {
   String createdViewId = 'kd_webview${tempRandomValue++}';
 
   @override
   void initState() {
     super.initState();
-    String md = markdownToHtml(widget.markdown);
-    ui.platformViewRegistry.registerViewFactory(
-        createdViewId,
-            (int viewId) => html.IFrameElement()
-          ..width = widget.width.toString() //'800'
-          ..height = widget.height.toString() //'400'
-          ..srcdoc = """<!DOCTYPE html><html>
-          <head><title></title></head><body>${md}</body></html>"""
-          ..style.border = 'none');
   }
 
   @override
@@ -52,8 +37,8 @@ class _WebViewState extends State<WebView> with AutomaticKeepAliveClientMixin{
       height: 200,
       child: Directionality(
         textDirection: TextDirection.ltr,
-        child: HtmlElementView(
-          viewType: createdViewId,
+        child: Markdown(
+          data: widget.markdown,
         ),
       ),
     );

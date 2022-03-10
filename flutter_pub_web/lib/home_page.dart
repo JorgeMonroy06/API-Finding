@@ -1,12 +1,13 @@
 import 'dart:convert';
-import 'package:clipboard/clipboard.dart';
+import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pub_web/loading_dialog.dart';
 import 'package:flutter_pub_web/main.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 /// @author newtab on 2021/5/7
 
@@ -23,7 +24,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getAllResp(context, false);
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      getAllResp(context, false);
+    });
   }
 
   String keyword = "";
@@ -73,6 +76,7 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           alignment: Alignment.topCenter,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 height: 150,
@@ -119,76 +123,71 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 width: getMaxWidth(context),
+                margin: EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 15,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "发布私有库务必在pubspec.yaml文件中注明 author: 作者字段,方便他人使用调试",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.red,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "当前共有 ${list.length} 个packages${getKeyCount()}",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xff4a4a4a),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: getMaxWidth(context),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height / 1.5),
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: list.length,
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          return Container(
-                            margin: EdgeInsets.symmetric(
-                              vertical: 20,
-                              horizontal: 15,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "发布私有库务必在pubspec.yaml文件中注明 author: 作者字段,方便他人使用调试",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.red,
-                                  ),
+                  child: ResponsiveBuilder(builder: (context, sizingInformation) {
+                    if (list.isEmpty) {
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey.shade300,
+                        highlightColor: Colors.grey.shade100,
+                        enabled: true,
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 12,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              padding: EdgeInsets.all(20),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
                                 ),
-                                SizedBox(height: 5,),
-                                Text(
-                                  "当前共有 ${list.length - 1} 个packages${getKeyCount()}",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color(0xff4a4a4a),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-
-                        String title = list[index]["title"];
-                        String desc = list[index]["yaml"]["description"] ?? "";
-                        String author = list[index]["yaml"]["author"] ?? "";
-
-                        int time = list[index]["time"];
-                        var format = new DateFormat("yyyy-MM-dd HH:mm");
-                        var dateString = format.format(DateTime.fromMillisecondsSinceEpoch(time));
-
-                        if (!title.contains(keyword) && !desc.contains(keyword) && !author.contains(keyword)) {
-                          return Container();
-                        }
-                        return Container(
-                          margin: EdgeInsets.only(
-                            left: 15,
-                            top: 15,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.of(context).pushNamed("/package/$title");
-                                      },
-                                      child: Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(
                                         child: Text(
-                                          title,
+                                          " ",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             color: Color(0xff0175c2),
                                             fontSize: 22,
@@ -196,145 +195,150 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.only(
-                                            top: 15,
-                                          ),
-                                          child: SelectableText(
-                                            desc,
+                                      Spacer(),
+                                      Text(
+                                        " ",
+                                        style: TextStyle(
+                                          color: Color(0xff4a4a4a),
+                                          fontSize: 16,
+                                        ),
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Spacer(),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            " ",
                                             style: TextStyle(
                                               color: Color(0xff4a4a4a),
-                                              fontSize: 16,
+                                              fontSize: 14,
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.only(
-                                            top: 20,
+                                          Text(
+                                            " ",
+                                            style: TextStyle(
+                                              color: Color(0xff0175c2),
+                                              fontSize: 14,
+                                            ),
                                           ),
-                                          child: Wrap(
-                                            spacing: 15,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    "最新版本: ",
-                                                    style: TextStyle(
-                                                      color: Color(0xff4a4a4a),
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    list[index]["lastedVersion"],
-                                                    style: TextStyle(
-                                                      color: Color(0xff0175c2),
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                ],
-                                                mainAxisSize: MainAxisSize.min,
-                                              ),
-                                              Text(
-                                                "•",
-                                                style: TextStyle(
-                                                  color: Color(0xff4a4a4a),
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text(
-                                                    "最近更新:",
-                                                    style: TextStyle(
-                                                      color: Color(0xff4a4a4a),
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    dateString,
-                                                    style: TextStyle(
-                                                      color: Color(0xff0175c2),
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Text(
-                                                "•",
-                                                style: TextStyle(
-                                                  color: Color(0xff4a4a4a),
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text(
-                                                    "作者:",
-                                                    style: TextStyle(
-                                                      color: Color(0xff4a4a4a),
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    author,
-                                                    style: TextStyle(
-                                                      color: Color(0xff0175c2),
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              InkWell(
-                                child: Container(
-                                  child: Icon(
-                                    CupertinoIcons.doc_on_clipboard,
-                                    size: 18,
-                                    color: Color(0xff0175c2),
+                                        ],
+                                        mainAxisSize: MainAxisSize.min,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                onTap: () {
-                                  var deply = """
-$title:
-    hosted:
-      name: $title
-      url: $HOST_API
-    version: ^${list[index]["lastedVersion"]}
-""";
-                                  FlutterClipboard.copy(deply);
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("依赖复制成功")));
-                                },
                               ),
-                              SizedBox(
-                                width: 15,
+                            );
+                          },
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: getCrossAxisCount(sizingInformation),
+                            childAspectRatio: getChildAspectRatio(sizingInformation),
+                          ),
+                        ),
+                      );
+                    }
+
+                    return GridView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: list.length,
+                      itemBuilder: (context, index) {
+                        String title = list[index]["title"];
+                        String desc = list[index]["yaml"]["description"] ?? "";
+                        String author = list[index]["yaml"]["author"] ?? "";
+
+                        if (!title.contains(keyword) && !desc.contains(keyword) && !author.contains(keyword)) {
+                          return Container(
+                              padding: EdgeInsets.all(20),
+                              child: ClayContainer(
+                                borderRadius: 20,
+                                color: Colors.white,
+                              ));
+                        }
+                        return Container(
+                          padding: EdgeInsets.all(20),
+                          child: MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed("/package/$title");
+                              },
+                              child: ClayContainer(
+                                borderRadius: 20,
+                                color: Colors.white,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(
+                                        child: Text(
+                                          title,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: Color(0xff0175c2),
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Text(
+                                        desc,
+                                        style: TextStyle(
+                                          color: Color(0xff4a4a4a),
+                                          fontSize: 16,
+                                        ),
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Spacer(),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "最新版本: ",
+                                            style: TextStyle(
+                                              color: Color(0xff4a4a4a),
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                          Text(
+                                            list[index]["lastedVersion"],
+                                            style: TextStyle(
+                                              color: Color(0xff0175c2),
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ],
+                                        mainAxisSize: MainAxisSize.min,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ],
+                            ),
                           ),
                         );
-                      }),
+                      },
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: getCrossAxisCount(sizingInformation),
+                        childAspectRatio: getChildAspectRatio(sizingInformation),
+                      ),
+                    );
+                  }),
                 ),
               ),
               Container(
@@ -372,6 +376,27 @@ $title:
     );
   }
 
+  double getChildAspectRatio(SizingInformation sizingInformation) {
+    if (sizingInformation.deviceScreenType == DeviceScreenType.mobile) {
+      return 2;
+    }
+    if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
+      return 2;
+    }
+
+    return 1.1;
+  }
+
+  int getCrossAxisCount(SizingInformation sizingInformation) {
+    if (sizingInformation.deviceScreenType == DeviceScreenType.mobile) {
+      return 1;
+    }
+    if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
+      return 2;
+    }
+    return 4;
+  }
+
   final List<Tools> toolLists = [
     Tools("JSON在线转dart", "https://javiercbk.github.io/json_to_dart/"),
     Tools("依赖版本说明", "https://dart.cn/tools/pub/dependencies"),
@@ -402,7 +427,6 @@ $title:
         return time - time2 > 0 ? 0 : 1;
       });
 
-      list.insert(0, "常用工具");
       setState(() {});
     }
   }
@@ -436,8 +460,8 @@ class Tools {
 }
 
 double getMaxWidth(BuildContext context) {
-  if (MediaQuery.of(context).size.width > 1000) {
-    return 1000;
+  if (MediaQuery.of(context).size.width > 1100) {
+    return 1100;
   }
 
   return MediaQuery.of(context).size.width;
