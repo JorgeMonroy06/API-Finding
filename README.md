@@ -7,7 +7,6 @@
 |pub_publisher|向私服发包源码|
 |pub_server|私服后端源码|
 
-
 ### 客户端使用
 
 > 1. 在pubspec.yaml文件添加: publish_to: http://私服ip:port
