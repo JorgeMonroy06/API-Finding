@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clay_containers/clay_containers.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
         ),
       );
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: baseColor,
       appBar: AppBar(
         backgroundColor: Color(0xff1c2834),
         elevation: 0,
@@ -106,22 +107,32 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
                   SizedBox(
                     width: 10,
                   ),
-                  InkWell(
-                    onTap: () {
-                      var deply = """
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () {
+                        var deply = """
 ${widget.packageName}:
     hosted:
       name: ${widget.packageName}
       url: $HOST_API
     version: ^${lastedVersion?["version"]}
 """;
-                      FlutterClipboard.copy(deply);
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("依赖复制成功")));
-                    },
-                    child: Icon(
-                      CupertinoIcons.doc_on_clipboard,
-                      size: 24,
-                      color: Colors.grey,
+                        FlutterClipboard.copy(deply);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("依赖复制成功")));
+                      },
+                      child: ClayContainer(
+                        borderRadius: 20,
+                        color: baseColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Icon(
+                            CupertinoIcons.doc_on_clipboard,
+                            size: 24,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -227,17 +238,17 @@ ${widget.packageName}:
                 ),
               ),
               Expanded(
-                child: TabBarView(controller: controller, children: [
-                  _buildReadMe(lastedVersion?["readme"] ?? ""),
-                  _buildUpdateHistory(),
-                  _buildInstall(),
-                  _buildDeploy(),
-                  _buildEnv(),
-                  _buildSource(),
-                ]),
-              ),
-              SizedBox(
-                height: 30,
+                child: ColoredBox(
+                  color: Colors.white,
+                  child: TabBarView(controller: controller, children: [
+                    _buildReadMe(lastedVersion?["readme"] ?? ""),
+                    _buildUpdateHistory(),
+                    _buildInstall(),
+                    _buildDeploy(),
+                    _buildEnv(),
+                    _buildSource(),
+                  ]),
+                ),
               ),
             ],
           ),

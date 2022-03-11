@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pub_web/bottom_widget.dart';
 import 'package:flutter_pub_web/loading_dialog.dart';
 import 'package:flutter_pub_web/main.dart';
 import 'package:http/http.dart' as http;
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: baseColor,
       appBar: AppBar(
         backgroundColor: Color(0xff1c2834),
         elevation: 0,
@@ -253,14 +254,14 @@ class _HomePageState extends State<HomePage> {
 
                         if (!title.contains(keyword) && !desc.contains(keyword) && !author.contains(keyword)) {
                           return Container(
-                              padding: EdgeInsets.all(20),
+                              padding: EdgeInsets.all(15),
                               child: ClayContainer(
-                                borderRadius: 20,
-                                color: Colors.white,
+                                borderRadius: 15,
+                                color: baseColor,
                               ));
                         }
                         return Container(
-                          padding: EdgeInsets.all(20),
+                          padding: EdgeInsets.all(15),
                           child: MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: GestureDetector(
@@ -268,10 +269,13 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.of(context).pushNamed("/package/$title");
                               },
                               child: ClayContainer(
-                                borderRadius: 20,
-                                color: Colors.white,
+                                borderRadius: 15,
+                                color: baseColor,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 15,
+                                    vertical: 10,
+                                  ),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -293,14 +297,19 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       Spacer(),
-                                      Text(
-                                        desc,
-                                        style: TextStyle(
-                                          color: Color(0xff4a4a4a),
-                                          fontSize: 16,
+                                      IgnorePointer(
+                                        ignoring: true,
+                                        child: SelectableText(
+                                          desc,
+                                          enableInteractiveSelection: false,
+                                          style: TextStyle(
+                                            height: 1.2,
+                                            color: Color(0xff4a4a4a),
+                                            fontSize: 16,
+                                          ),
+                                          minLines: 2,
+                                          maxLines: 2,
                                         ),
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
                                       ),
                                       Spacer(),
                                       Row(
@@ -341,34 +350,7 @@ class _HomePageState extends State<HomePage> {
                   }),
                 ),
               ),
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(
-                  top: 30,
-                ),
-                height: 80,
-                color: Color(0xff27323A),
-                child: Wrap(
-                  spacing: 15,
-                  children: toolLists.map<Widget>((e) {
-                    return Container(
-                      child: InkWell(
-                        onTap: () async {
-                          await launch(e.url);
-                        },
-                        child: Text(
-                          e.name,
-                          style: TextStyle(
-                            height: 1,
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
+              BottomWidget(),
             ],
           ),
         ),
@@ -384,7 +366,7 @@ class _HomePageState extends State<HomePage> {
       return 2;
     }
 
-    return 1.1;
+    return 1.3;
   }
 
   int getCrossAxisCount(SizingInformation sizingInformation) {
@@ -396,13 +378,6 @@ class _HomePageState extends State<HomePage> {
     }
     return 4;
   }
-
-  final List<Tools> toolLists = [
-    Tools("JSON在线转dart", "https://javiercbk.github.io/json_to_dart/"),
-    Tools("依赖版本说明", "https://dart.cn/tools/pub/dependencies"),
-    Tools("Pub地址", "https://pub.flutter-io.cn/"),
-    Tools("API", "https://api.flutter.dev/"),
-  ];
 
   void getAllResp(BuildContext context, bool show) async {
     HideCallback? result;
@@ -450,13 +425,6 @@ class _HomePageState extends State<HomePage> {
 
     return " , \"$keyword\"关键字发现了${result.length}个结果";
   }
-}
-
-class Tools {
-  String name;
-  String url;
-
-  Tools(this.name, this.url);
 }
 
 double getMaxWidth(BuildContext context) {
