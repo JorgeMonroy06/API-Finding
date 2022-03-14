@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -285,9 +286,10 @@ class _HomePageState extends State<HomePage> {
                                         height: 10,
                                       ),
                                       Container(
-                                        child: Text(
+                                        child: AutoSizeText(
                                           title,
                                           maxLines: 1,
+                                          minFontSize: 14,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             color: Color(0xff0175c2),
