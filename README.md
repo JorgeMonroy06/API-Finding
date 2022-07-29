@@ -65,21 +65,27 @@ http://ip:port/packages/<package-name>/versions/<version-name>.tar.gz //下载�
 
 > 3. 修改 ./example/example.dart 中的
 ```dart
+
+host (修改为自己的私服地址)
+
+webHookKey (企业微信推送需要配置,如果需要修改推送内容,请查看push.dart源码)
+
+
+更多详细的配置,查看 argsParser() 方法
+
 ArgParser argsParser() {
   var parser = ArgParser();
 
-  //pub_server-repository-data修改成你需要的路径
-  parser.addOption('directory',
-      abbr: 'd', defaultsTo: 'pub_server-repository-data');
-
-  //为保证外部访问,修改成服务器的ip
-  parser.addOption('host', abbr: 'h', defaultsTo: 'localhost');
-
-  //修改成自己想要的端口
+  //配置私有库存放路径
+  parser.addOption('directory', abbr: 'd', defaultsTo: '/opt/flutter_repo');
+  //配置host
+  parser.addOption('host', abbr: 'h', defaultsTo: host);
+  //配置端口
   parser.addOption('port', abbr: 'p', defaultsTo: '6453');
   parser.addFlag('standalone', abbr: 's', defaultsTo: false);
   return parser;
 }
+
 
 ```
 
