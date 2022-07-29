@@ -16,7 +16,9 @@ import 'src/examples/file_repository.dart';
 import 'src/examples/http_proxy_repository.dart';
 
 final Uri pubDartLangOrg = Uri.parse('https://pub.dartlang.org');
-final String wechatNotifyUrl = "";
+
+final String host = 'localhost';
+final String webHookKey = 'xxx';
 
 ///注意修改67行的localhost为你的ip名称
 void main(List<String> args) {
@@ -63,15 +65,9 @@ Future<HttpServer> runPubServer(String baseDir, String host, int port, bool stan
 ArgParser argsParser() {
   var parser = ArgParser();
 
-
-
-  parser.addOption('directory',
-      abbr: 'd', defaultsTo: './flutter_repo/repo');
-  parser.addOption('host', abbr: 'h', defaultsTo: 'localhost');
-
+  parser.addOption('directory', abbr: 'd', defaultsTo: '/opt/flutter_repo');
+  parser.addOption('host', abbr: 'h', defaultsTo: host);
   parser.addOption('port', abbr: 'p', defaultsTo: '6453');
-
-
   parser.addFlag('standalone', abbr: 's', defaultsTo: false);
   return parser;
 }

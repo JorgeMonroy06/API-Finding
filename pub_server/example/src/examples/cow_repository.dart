@@ -7,8 +7,10 @@ library pub_server.copy_and_write_repository;
 import 'dart:async';
 
 import 'package:logging/logging.dart';
-import 'package:pub_server/directmessage.dart';
 import 'package:pub_server/repository.dart';
+import 'package:yaml/yaml.dart';
+
+import 'push.dart';
 
 final Logger _logger = Logger('pub_server.cow_repository');
 
@@ -101,7 +103,32 @@ class CopyAndWriteRepository extends PackageRepository {
   Future<PackageVersion> upload(Stream<List<int>> data) async {
     _logger.info('Starting upload to local package repository.');
     final pkgVersion = await local.upload(data);
-    // TODO: It's not really necessary to invalidate all.
+    try {
+      var updateNote = '';
+      var author = '';
+      var result = await local.lookupVersion(pkgVersion.packageName, pkgVersion.version.toString());
+
+      if (result != null) {
+        updateNote = result.pubspecYaml;
+        var yaml = loadYaml(result.pubspecYaml);
+        updateNote = yaml['update_note'].toString() ?? '';
+        author = yaml['author'].toString() ?? '';
+      }
+
+      var currentVersion = pkgVersion.version.toString();
+
+      Push().push(
+        pkgVersion.packageName,
+        currentVersion,
+        author,
+        updateNote,
+      );
+    } catch (e) {
+      Push().error(
+        pkgVersion.packageName,
+        e.toString(),
+      );
+    }
     _logger.info('Upload finished - ${pkgVersion.packageName}@${pkgVersion.version}. '
         'Invalidating in-memory cache.');
     _localCache.invalidateAll();

@@ -13,6 +13,8 @@ import 'package:pub_server/directmessage.dart';
 import 'package:pub_server/repository.dart';
 import 'package:yaml/yaml.dart';
 
+import 'push.dart';
+
 final Logger _logger = Logger('pub_server.file_repository');
 
 /// Implements the [PackageRepository] by storing pub packages on a file system.
@@ -20,7 +22,7 @@ class FileRepository extends PackageRepository {
   @override
   final String baseDir;
 
-  FileRepository(this.baseDir):super(baseDir: baseDir);
+  FileRepository(this.baseDir) : super(baseDir: baseDir);
 
   @override
   Stream<PackageVersion> versions(String package) {
@@ -85,6 +87,21 @@ class FileRepository extends PackageRepository {
 
     var package = pubspec['name'] as String;
     var version = pubspec['version'] as String;
+
+    try {
+      final startVersion = RegExp(r'^' // Start at beginning.
+          r'(\d+).(\d+).(\d+)' // Version number.
+          r'(-([0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?' // Pre-release.
+          r'(\+([0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?'); // Build.
+
+      final completeVersion = RegExp('${startVersion.pattern}\$');
+      final match = completeVersion.firstMatch(version);
+      if (match == null) {
+        throw StateError('版本号存在问题,只支持x.x.x或者更短的格式');
+      }
+    } catch (e) {
+      throw StateError('`$package` ${e.toString()}');
+    }
 
     var packageVersionDir = Directory(p.join(baseDir, package, version));
 
