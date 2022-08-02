@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pub_web/bottom_widget.dart';
@@ -26,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       getAllResp(context, false);
     });
   }
@@ -50,7 +49,7 @@ class _HomePageState extends State<HomePage> {
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w500,
-            fontSize: 16,
+            fontSize: 18,
           ),
         ),
         actions: [
@@ -160,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                   child: ResponsiveBuilder(builder: (context, sizingInformation) {
                     if (list.isEmpty) {
                       return Shimmer.fromColors(
-                        baseColor: Colors.grey.shade300,
+                        baseColor: Colors.white,
                         highlightColor: Colors.grey.shade100,
                         enabled: true,
                         child: GridView.builder(
@@ -170,68 +169,66 @@ class _HomePageState extends State<HomePage> {
                           itemBuilder: (context, index) {
                             return Container(
                               padding: EdgeInsets.all(20),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                      child: Text(
+                                        " ",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: Color(0xff0175c2),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
-                                      Container(
-                                        child: Text(
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      " ",
+                                      style: TextStyle(
+                                        color: Color(0xff4a4a4a),
+                                        fontSize: 16,
+                                      ),
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Spacer(),
+                                    Row(
+                                      children: [
+                                        Text(
                                           " ",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: Color(0xff4a4a4a),
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        Text(
+                                          " ",
                                           style: TextStyle(
                                             color: Color(0xff0175c2),
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
                                           ),
                                         ),
-                                      ),
-                                      Spacer(),
-                                      Text(
-                                        " ",
-                                        style: TextStyle(
-                                          color: Color(0xff4a4a4a),
-                                          fontSize: 16,
-                                        ),
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Spacer(),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            " ",
-                                            style: TextStyle(
-                                              color: Color(0xff4a4a4a),
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                          Text(
-                                            " ",
-                                            style: TextStyle(
-                                              color: Color(0xff0175c2),
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ],
-                                        mainAxisSize: MainAxisSize.min,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                    ],
-                                  ),
+                                      ],
+                                      mainAxisSize: MainAxisSize.min,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
                                 ),
                               ),
                             );
@@ -239,6 +236,8 @@ class _HomePageState extends State<HomePage> {
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: getCrossAxisCount(sizingInformation),
                             childAspectRatio: getChildAspectRatio(sizingInformation),
+                            mainAxisSpacing: 15,
+                            crossAxisSpacing: 15,
                           ),
                         ),
                       );
@@ -255,89 +254,93 @@ class _HomePageState extends State<HomePage> {
 
                         if (!title.contains(keyword) && !desc.contains(keyword) && !author.contains(keyword)) {
                           return Container(
-                              padding: EdgeInsets.all(15),
-                              child: ClayContainer(
-                                borderRadius: 15,
-                                color: baseColor,
-                              ));
+                            padding: EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white,
+                            ),
+                          );
                         }
                         return Container(
                           padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                          ),
                           child: MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
                               onTap: () {
                                 Navigator.of(context).pushNamed("/package/$title");
                               },
-                              child: ClayContainer(
-                                borderRadius: 15,
-                                color: baseColor,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 15,
-                                    vertical: 10,
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Container(
-                                        child: AutoSizeText(
-                                          title,
-                                          maxLines: 1,
-                                          minFontSize: 14,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: Color(0xff0175c2),
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                  vertical: 10,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                      child: AutoSizeText(
+                                        title,
+                                        maxLines: 1,
+                                        minFontSize: 14,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: Color(0xff1967d2),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
-                                      Spacer(),
-                                      IgnorePointer(
-                                        ignoring: true,
-                                        child: SelectableText(
-                                          desc,
-                                          enableInteractiveSelection: false,
-                                          style: TextStyle(
-                                            height: 1.2,
-                                            color: Color(0xff4a4a4a),
-                                            fontSize: 16,
-                                          ),
-                                          minLines: 2,
-                                          maxLines: 2,
+                                    ),
+                                    Spacer(),
+                                    IgnorePointer(
+                                      ignoring: true,
+                                      child: SelectableText(
+                                        desc,
+                                        enableInteractiveSelection: false,
+                                        style: TextStyle(
+                                          height: 1.2,
+                                          color: Color(0xff333333),
+                                          fontSize: 16,
                                         ),
+                                        minLines: 2,
+                                        maxLines: 2,
                                       ),
-                                      Spacer(),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "最新版本: ",
-                                            style: TextStyle(
-                                              color: Color(0xff4a4a4a),
-                                              fontSize: 14,
-                                            ),
+                                    ),
+                                    Spacer(),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "最新版本: ",
+                                          style: TextStyle(
+                                            height: 1,
+                                            color: Color(0xff333333),
+                                            fontSize: 14,
                                           ),
-                                          Text(
-                                            list[index]["lastedVersion"],
-                                            style: TextStyle(
-                                              color: Color(0xff0175c2),
-                                              fontSize: 14,
-                                            ),
+                                        ),
+                                        Text(
+                                          list[index]["lastedVersion"],
+                                          style: TextStyle(
+                                            height: 1,
+                                            color: Color(0xff1967d2),
+                                            fontSize: 14,
                                           ),
-                                        ],
-                                        mainAxisSize: MainAxisSize.min,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                      mainAxisSize: MainAxisSize.min,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -347,6 +350,8 @@ class _HomePageState extends State<HomePage> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: getCrossAxisCount(sizingInformation),
                         childAspectRatio: getChildAspectRatio(sizingInformation),
+                        mainAxisSpacing: 15,
+                        crossAxisSpacing: 15,
                       ),
                     );
                   }),

@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'dart:ui';
 
-import 'package:clay_containers/clay_containers.dart';
 import 'package:clipboard/clipboard.dart';
+import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pub_web/home_page.dart';
@@ -51,7 +52,7 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
         ),
       );
     return Scaffold(
-      backgroundColor: baseColor,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color(0xff1c2834),
         elevation: 0,
@@ -62,7 +63,7 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w500,
-            fontSize: 16,
+            fontSize: 18,
           ),
         ),
         actions: [
@@ -121,16 +122,12 @@ ${widget.packageName}:
                         FlutterClipboard.copy(deply);
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("依赖复制成功")));
                       },
-                      child: ClayContainer(
-                        borderRadius: 20,
-                        color: baseColor,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Icon(
-                            CupertinoIcons.doc_on_clipboard,
-                            size: 24,
-                            color: Colors.grey,
-                          ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Icon(
+                          CupertinoIcons.doc_on_clipboard_fill,
+                          size: 24,
+                          color: Colors.grey,
                         ),
                       ),
                     ),
@@ -138,11 +135,13 @@ ${widget.packageName}:
                 ],
               ),
               SizedBox(
-                height: 15,
+                height: 20,
               ),
               Container(
                 child: SelectableText(
                   lastedVersion?["pubspec"]?["description"] ?? "",
+                  selectionHeightStyle: BoxHeightStyle.max,
+                  selectionWidthStyle: BoxWidthStyle.max,
                   style: TextStyle(
                     color: Color(0xff4a4a4a),
                     fontSize: 16,
@@ -150,13 +149,15 @@ ${widget.packageName}:
                 ),
               ),
               SizedBox(
-                height: 15,
+                height: 20,
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     "最新版本: ",
                     style: TextStyle(
+                      height: 1,
                       color: Color(0xff4a4a4a),
                       fontSize: 14,
                     ),
@@ -164,26 +165,29 @@ ${widget.packageName}:
                   Text(
                     lastedVersion?["version"] ?? "",
                     style: TextStyle(
-                      color: Color(0xff0175c2),
+                      height: 1,
+                      color: Color(0xff1967d2),
                       fontSize: 14,
                     ),
                   ),
                   SizedBox(
-                    width: 15,
+                    width: 10,
                   ),
                   Text(
                     "•",
                     style: TextStyle(
+                      height: 1,
                       color: Color(0xff4a4a4a),
                       fontSize: 14,
                     ),
                   ),
                   SizedBox(
-                    width: 15,
+                    width: 10,
                   ),
                   Text(
                     "作者:",
                     style: TextStyle(
+                      height: 1,
                       color: Color(0xff4a4a4a),
                       fontSize: 14,
                     ),
@@ -192,7 +196,8 @@ ${widget.packageName}:
                     child: Text(
                       lastedVersion?["pubspec"]?["author"] ?? "",
                       style: TextStyle(
-                        color: Color(0xff0175c2),
+                        height: 1,
+                        color: Color(0xff1967d2),
                         fontSize: 14,
                       ),
                     ),
@@ -200,41 +205,80 @@ ${widget.packageName}:
                 ],
               ),
               Container(
-                color: Color(0xffF5F5F7),
                 width: double.infinity,
-                margin: EdgeInsets.only(
-                  top: 30,
-                ),
-                padding: EdgeInsets.only(
-                  top: 5,
-                  left: 10,
-                  right: 10,
-                ),
-                child: TabBar(
-                  isScrollable: true,
-                  controller: controller,
-                  labelColor: Color(0xff0175c2),
-                  unselectedLabelColor: Color(0xff4a4a4a),
-                  tabs: [
-                    Tab(
-                      text: "README",
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 10,
+                    top: 20,
+                  ),
+                  child: CustomSlidingSegmentedControl<int>(
+                    initialValue: 0,
+                    height: 35,
+                    isStretch: true,
+                    children: {
+                      0: Text(
+                        "README",
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xff333333),
+                        ),
+                      ),
+                      1: Text(
+                        "更新记录",
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xff333333),
+                        ),
+                      ),
+                      2: Text(
+                        "下载安装",
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xff333333),
+                        ),
+                      ),
+                      3: Text(
+                        "依赖内容",
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xff333333),
+                        ),
+                      ),
+                      4: Text(
+                        "所需环境",
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xff333333),
+                        ),
+                      ),
+                      5: Text(
+                        "源码下载",
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xff333333),
+                        ),
+                      ),
+                    },
+                    decoration: BoxDecoration(
+                      color: Color(0xfff9f9f9),
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    Tab(
-                      text: "更新记录",
+                    thumbDecoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
                     ),
-                    Tab(
-                      text: "下载安装",
-                    ),
-                    Tab(
-                      text: "依赖内容",
-                    ),
-                    Tab(
-                      text: "所需环境",
-                    ),
-                    Tab(
-                      text: "源码下载",
-                    ),
-                  ],
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInToLinear,
+                    onValueChanged: (v) {
+                      controller?.index = v;
+                    },
+                  ),
                 ),
               ),
               Expanded(
@@ -288,48 +332,105 @@ ${widget.packageName}:
         return Divider(
           indent: 15,
           endIndent: 15,
-          thickness: 0.5,
-          color: Color(0xff4a4a4a),
+          height: 0.5,
+          thickness: 0,
+          color: Color(0xffBBBBBB),
         );
       },
       itemBuilder: (context, index) {
-        int time = history[index]?["time"];
+        if (index == 0) {
+          return Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 20,
+              horizontal: 30,
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 200,
+                  child: Text(
+                    "更新时间",
+                    style: TextStyle(
+                      color: Color(0xff4a4a4a),
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      "版本号",
+                      style: TextStyle(
+                        color: Color(0xff4a4a4a),
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: SelectableText(
+                      "更新内容",
+                      selectionWidthStyle: BoxWidthStyle.max,
+                      selectionHeightStyle: BoxHeightStyle.max,
+                      style: TextStyle(
+                        color: Color(0xff4a4a4a),
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        int time = history[index - 1]?["time"];
         var format = new DateFormat("yyyy-MM-dd HH:mm");
         var dateString = format.format(DateTime.fromMillisecondsSinceEpoch(time));
 
         return Container(
           padding: EdgeInsets.symmetric(
-            vertical: 10,
+            vertical: 20,
             horizontal: 15,
           ),
           child: Row(
             children: [
-              Text(
-                dateString,
-                style: TextStyle(
-                  color: Color(0xff4a4a4a),
-                  fontSize: 24,
-                ),
-              ),
               SizedBox(
-                width: 30,
-              ),
-              Text(
-                history[index]?["pubspec"]?["version"] ?? "",
-                style: TextStyle(
-                  color: Color(0xff4a4a4a),
-                  fontSize: 24,
-                ),
-              ),
-              SizedBox(
-                width: 30,
-              ),
-              Expanded(
-                child: SelectableText(
-                  history[index]?["pubspec"]?["update_note"] ?? "未找到更新日志,在yaml文件中添加update_note字段作为更新日志会被识别",
+                width: 200,
+                child: Text(
+                  dateString,
                   style: TextStyle(
                     color: Color(0xff4a4a4a),
                     fontSize: 18,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    history[index - 1]?["pubspec"]?["version"] ?? "",
+                    style: TextStyle(
+                      color: Color(0xff4a4a4a),
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: SelectableText(
+                    history[index - 1]?["pubspec"]?["update_note"] ?? "未找到更新日志,在yaml文件中添加update_note字段作为更新日志会被识别",
+                    selectionWidthStyle: BoxWidthStyle.max,
+                    selectionHeightStyle: BoxHeightStyle.max,
+                    style: TextStyle(
+                      color: Color(0xff4a4a4a),
+                      fontSize: 18,
+                    ),
                   ),
                 ),
               ),
@@ -337,7 +438,7 @@ ${widget.packageName}:
           ),
         );
       },
-      itemCount: history.length,
+      itemCount: history.length + 1,
     );
   }
 
@@ -347,23 +448,64 @@ ${widget.packageName}:
         return Divider(
           indent: 15,
           endIndent: 15,
-          thickness: 0.5,
-          color: Color(0xff4a4a4a),
+          height: 0.5,
+          thickness: 0,
+          color: Color(0xffBBBBBB),
         );
       },
       itemBuilder: (context, index) {
+        if (index == 0) {
+          return Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 20,
+              horizontal: 30,
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 200,
+                  child: Text(
+                    "版本号",
+                    style: TextStyle(
+                      color: Color(0xff4a4a4a),
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                Expanded(
+                  child: SelectableText(
+                    "依赖内容",
+                    selectionWidthStyle: BoxWidthStyle.max,
+                    selectionHeightStyle: BoxHeightStyle.max,
+                    style: TextStyle(
+                      color: Color(0xff4a4a4a),
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
         return Container(
           padding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 15,
+            vertical: 20,
+            horizontal: 30,
           ),
           child: Row(
             children: [
-              Text(
-                history[index]?["pubspec"]?["version"] ?? "",
-                style: TextStyle(
-                  color: Color(0xff4a4a4a),
-                  fontSize: 24,
+              SizedBox(
+                width: 200,
+                child: Text(
+                  history[index - 1]?["pubspec"]?["version"] ?? "",
+                  style: TextStyle(
+                    color: Color(0xff4a4a4a),
+                    fontSize: 18,
+                  ),
                 ),
               ),
               SizedBox(
@@ -371,7 +513,9 @@ ${widget.packageName}:
               ),
               Expanded(
                 child: SelectableText(
-                  prettyJson(history[index]?["pubspec"]?["dependencies"], indent: 2),
+                  prettyJson(history[index - 1]?["pubspec"]?["dependencies"], indent: 2),
+                  selectionWidthStyle: BoxWidthStyle.max,
+                  selectionHeightStyle: BoxHeightStyle.max,
                   style: TextStyle(
                     color: Color(0xff4a4a4a),
                     fontSize: 18,
@@ -382,7 +526,7 @@ ${widget.packageName}:
           ),
         );
       },
-      itemCount: history.length,
+      itemCount: history.length + 1,
     );
   }
 
@@ -392,23 +536,61 @@ ${widget.packageName}:
         return Divider(
           indent: 15,
           endIndent: 15,
-          thickness: 0.5,
-          color: Color(0xff4a4a4a),
+          height: 0.5,
+          thickness: 0,
+          color: Color(0xffBBBBBB),
         );
       },
       itemBuilder: (context, index) {
+        if (index == 0) {
+          return Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 20,
+              horizontal: 30,
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 200,
+                  child: Text(
+                    "版本号",
+                    style: TextStyle(
+                      color: Color(0xff4a4a4a),
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                Expanded(
+                  child: Text(
+                    "所需环境",
+                    style: TextStyle(
+                      color: Color(0xff4a4a4a),
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
         return Container(
           padding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 15,
+            vertical: 20,
+            horizontal: 30,
           ),
           child: Row(
             children: [
-              Text(
-                history[index]?["pubspec"]?["version"] ?? "",
-                style: TextStyle(
-                  color: Color(0xff4a4a4a),
-                  fontSize: 24,
+              SizedBox(
+                width: 200,
+                child: Text(
+                  history[index - 1]?["pubspec"]?["version"] ?? "",
+                  style: TextStyle(
+                    color: Color(0xff4a4a4a),
+                    fontSize: 18,
+                  ),
                 ),
               ),
               SizedBox(
@@ -416,7 +598,9 @@ ${widget.packageName}:
               ),
               Expanded(
                 child: SelectableText(
-                  prettyJson(history[index]?["pubspec"]?["environment"], indent: 2),
+                  prettyJson(history[index - 1]?["pubspec"]?["environment"], indent: 2),
+                  selectionWidthStyle: BoxWidthStyle.max,
+                  selectionHeightStyle: BoxHeightStyle.max,
                   style: TextStyle(
                     color: Color(0xff4a4a4a),
                     fontSize: 18,
@@ -427,7 +611,7 @@ ${widget.packageName}:
           ),
         );
       },
-      itemCount: history.length,
+      itemCount: history.length + 1,
     );
   }
 
@@ -437,15 +621,16 @@ ${widget.packageName}:
         return Divider(
           indent: 15,
           endIndent: 15,
-          thickness: 0.5,
-          color: Color(0xff4a4a4a),
+          height: 0.5,
+          thickness: 0,
+          color: Color(0xffBBBBBB),
         );
       },
       itemBuilder: (context, index) {
         return Container(
           padding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 15,
+            vertical: 20,
+            horizontal: 30,
           ),
           child: Row(
             children: [
@@ -462,6 +647,8 @@ ${widget.packageName}:
               Expanded(
                 child: SelectableText(
                   history[index]?["archive_url"] ?? "",
+                  selectionWidthStyle: BoxWidthStyle.max,
+                  selectionHeightStyle: BoxHeightStyle.max,
                   style: TextStyle(
                     color: Color(0xff4a4a4a),
                     fontSize: 18,
@@ -507,11 +694,13 @@ ${widget.packageName}:
           children: [
             Container(
               padding: EdgeInsets.only(
-                top: 15,
-                bottom: 15,
+                top: 20,
+                bottom: 20,
               ),
               child: SelectableText(
                 "复制如下内容到你项目中的yaml文件,然后执行 pub get",
+                selectionWidthStyle: BoxWidthStyle.max,
+                selectionHeightStyle: BoxHeightStyle.max,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 16,
@@ -524,6 +713,8 @@ ${widget.packageName}:
               color: Color(0xffF5F5F7),
               child: SelectableText(
                 deply,
+                selectionWidthStyle: BoxWidthStyle.max,
+                selectionHeightStyle: BoxHeightStyle.max,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 16,
