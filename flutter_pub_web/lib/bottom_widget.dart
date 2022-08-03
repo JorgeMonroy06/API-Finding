@@ -24,7 +24,7 @@ class BottomWidget extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       margin: EdgeInsets.only(
-        top: 30,
+        top: 10,
       ),
       height: 80,
       color: Color(0xff27323A),

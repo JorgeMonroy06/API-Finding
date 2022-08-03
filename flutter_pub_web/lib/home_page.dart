@@ -36,42 +36,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: baseColor,
-      appBar: AppBar(
-        backgroundColor: Color(0xff1c2834),
-        elevation: 0,
-        centerTitle: true,
-        leading: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
-          child: FlutterLogo(),
-        ),
-        title: Text(
-          APP_TIELE,
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
-            fontSize: 18,
-          ),
-        ),
-        actions: [
-          InkWell(
-            child: Center(
-              child: Text(
-                "Help",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            onTap: () async {
-              await launch("https://github.com/jiang111/pub_server/blob/master/README.md");
-            },
-          ),
-          SizedBox(
-            width: 15,
-          ),
-        ],
-      ),
       body: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Container(
@@ -79,46 +43,98 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              AppBar(
+                backgroundColor: Color(0xff1c2834),
+                elevation: 0,
+                centerTitle: true,
+                leading: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                  child: FlutterLogo(),
+                ),
+                title: Text(
+                  APP_TIELE,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                  ),
+                ),
+                actions: [
+                  InkWell(
+                    child: Center(
+                      child: Text(
+                        "Help",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    onTap: () async {
+                      await launch("https://github.com/jiang111/pub_server/blob/master/README.md");
+                    },
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                ],
+              ),
               Container(
-                height: 150,
-                color: Color(0xff132030),
                 alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/bg.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
                     maxWidth: getMaxWidth(context) / 1.4,
                   ),
-                  child: CupertinoSearchTextField(
-                    onChanged: (v) {
-                      setState(() {
-                        keyword = v;
-                      });
-                    },
-                    placeholder: "输入 标题,描述,作者 等关键字搜索",
-                    itemColor: Colors.white,
-                    padding: EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 30,
-                    ),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                    placeholderStyle: TextStyle(
-                      color: Color(0xff888888),
-                      fontSize: 16,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Color(0xff35404d),
-                      borderRadius: BorderRadius.circular(
-                        24,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        height: 80,
                       ),
-                    ),
-                    prefixInsets: EdgeInsets.only(
-                      top: 10,
-                      bottom: 10,
-                      left: 30,
-                    ),
-                    itemSize: 16,
+                      CupertinoSearchTextField(
+                        onChanged: (v) {
+                          setState(() {
+                            keyword = v;
+                          });
+                        },
+                        placeholder: "输入 标题,描述,作者 等关键字搜索",
+                        itemColor: Colors.white,
+                        suffixInsets: EdgeInsets.symmetric(horizontal: 15,),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 30,
+                        ),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                        placeholderStyle: TextStyle(
+                          color: Color(0xff888888),
+                          fontSize: 16,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xff35404d),
+                          borderRadius: BorderRadius.circular(
+                            24,
+                          ),
+                        ),
+                        prefixInsets: EdgeInsets.only(
+                          top: 10,
+                          bottom: 10,
+                          left: 30,
+                        ),
+                        itemSize: 16,
+                      ),
+                      SizedBox(
+                        height: 80,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -128,28 +144,12 @@ class _HomePageState extends State<HomePage> {
                   vertical: 20,
                   horizontal: 15,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "发布私有库务必在pubspec.yaml文件中注明 author: 作者字段,方便他人使用调试",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.red,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "当前共有 ${list.length} 个packages${getKeyCount()}",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xff4a4a4a),
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  "当前共有 ${list.length} 个packages${getKeyCount()}",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xff4a4a4a),
+                  ),
                 ),
               ),
               Container(
@@ -356,6 +356,9 @@ class _HomePageState extends State<HomePage> {
                     );
                   }),
                 ),
+              ),
+              SizedBox(
+                height: 50,
               ),
               BottomWidget(),
             ],

@@ -194,7 +194,7 @@ ${widget.packageName}:
                   ),
                   Expanded(
                     child: Text(
-                      lastedVersion?["pubspec"]?["author"] ?? "",
+                      lastedVersion?["pubspec"]?["author"] ?? "请在pubspec.yaml中填写author字段",
                       style: TextStyle(
                         height: 1,
                         color: Color(0xff1967d2),
@@ -424,7 +424,7 @@ ${widget.packageName}:
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: SelectableText(
-                    history[index - 1]?["pubspec"]?["update_note"] ?? "未找到更新日志,在yaml文件中添加update_note字段作为更新日志会被识别",
+                    history[index - 1]?["pubspec"]?["update_note"] ?? "请在pubspec.yaml文件中添加update_note字段作为更新记录",
                     selectionWidthStyle: BoxWidthStyle.max,
                     selectionHeightStyle: BoxHeightStyle.max,
                     style: TextStyle(
