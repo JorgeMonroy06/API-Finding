@@ -9,17 +9,16 @@
 
 ### 客户端使用
 
-> 1. 在pubspec.yaml文件添加: publish_to: http://私服ip:port
+> 0. 在pubspec.yaml文件添加: publish_to: http://私服ip:port
 
->2. windows用户下载[文件](https://github.com/jiang111/pub_server/raw/master/pub_publisher/bin/publite.exe),在命令行执行这个文件,比如:
+> 1. windows用户下载[文件](https://github.com/jiang111/pub_server/raw/master/pub_publisher/bin/publite.exe),把publite添加到环境变量,在命令行执行这个文件,比如:
 
 ```
 publite E:\coding\my_app
 ```
 
-建议把publite添加到环境变量
 
->2. 或者将这个链接的代码复制到项目中 https://github.com/jiang111/pub_server/blob/master/pub_publisher/lib/pub_publisher.dart 运行这个文件
+> 2. Mac/Linux用户将这个链接的代码复制到项目中 https://github.com/jiang111/pub_server/blob/master/pub_publisher/lib/pub_publisher.dart 运行这个文件
 
 
 > 3. 如何查看仓库是否发布成功, 查看部署的web地址,或者调用 http://ip:port/api/getAllPackages 如果能查询到你的仓库和对应的版本则代表发布成功
