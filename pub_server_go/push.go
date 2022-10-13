@@ -21,7 +21,7 @@ func Push(packageName string,
 	if author != "" {
 		content += " 作者: " + author + "\n"
 	}
-	content += " 地址: http://" + GetOutboundIP().String() + ":" + config.Port + "/#/package/" + packageName
+	content += " 地址: http://" + GetOutboundIP().String() + ":" + config.WebPort + "/#/package/" + packageName
 	jsonMap := make(map[string]any, 2)
 
 	jsonMap["msgtype"] = "text"

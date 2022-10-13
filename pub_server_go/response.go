@@ -28,6 +28,7 @@ type packageInfoParentBean struct {
 
 type Config struct {
 	Port      string `json:"port"`
+	WebPort   string `json:"webPort"`
 	Path      string `json:"path"`
 	WeWorkKey string `json:"weWorkKey"`
 	CanUpload bool   `json:"canUpload"`
