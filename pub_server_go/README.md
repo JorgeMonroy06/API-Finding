@@ -1,6 +1,6 @@
 # Flutter私有库管理
 
-使用gin框架,基于go语言编写
+使用gin框架,基于go语言编写,使用前请先配置config.json文件
 
 ```
 {
