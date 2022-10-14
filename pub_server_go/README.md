@@ -1,6 +1,6 @@
 # Flutter私有库管理
 
-使用gin框架,基于go语言编写
+使用gin框架,基于go语言编写,运行之前新增 config.json 文件到 pub_server_go 同级目录,配置如下
 
 ```
 {
