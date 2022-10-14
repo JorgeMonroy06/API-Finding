@@ -14,6 +14,8 @@
 
 ## 运行
 
+已经生成好linux端可执行文件 pub_server_go 直接运行即可
+
 ```shell
 chmod 774 pub_server_go
 bash run.sh
