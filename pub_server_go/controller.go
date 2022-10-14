@@ -6,27 +6,17 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
 func GetAllPackagesController(c *gin.Context) {
 
-	list := listDir(config.Path)
-
-	packages := []packageBean{}
-	for _, packagePath := range list {
-		lastedVersion, lastedVersionName := getLastedPackageVersion(packagePath.Path)
-		packageInfo := readPackageVersion(lastedVersion)
-		packages = append(packages, packageBean{
-			Title:         packagePath.Name,
-			LastedVersion: lastedVersionName,
-			Yaml:          packageInfo,
-		})
-
+	packages, err := GetAllPackagesService()
+	if err != nil {
+		FailBadRequest(c, map[string]any{"msg": err.Error()})
+		return
 	}
-
 	Success(c, map[string]any{
 		"packages": packages,
 	})
@@ -35,39 +25,10 @@ func GetAllPackagesController(c *gin.Context) {
 
 func GetSpeaiclPackageController(ctx *gin.Context) {
 
-	ll("开始请求GetSpeaiclPackageController")
-	name := ctx.Param("name")
-	ll("参数:" + name)
-	//获取所有的版本
-	dir := filepath.Join(config.Path, name)
-
-	list := listDir(dir)
-
-	infos := []packageInfoBean{}
-
-	for _, path := range list {
-
-		tempPackageInfo := readPackageVersion(path.Path)
-
-		if tempPackageInfo == nil {
-			continue
-		}
-
-		infos = append(infos, packageInfoBean{
-			Version:     path.Name,
-			Pubspec:     tempPackageInfo,
-			Time:        time.Now().UnixNano() / int64(time.Millisecond),
-			Readme:      readFile(filepath.Join(path.Path, "README.md")),
-			Archive_url: "http://" + string(GetOutboundIP().String()) + ":" + config.Port + "/packages/" + name + "/versions/" + path.Name + ".tar.gz",
-		})
-
-	}
-
-	result := packageInfoParentBean{
-		Name:     name,
-		Versions: infos,
-		Time:     time.Now().UnixNano() / int64(time.Millisecond),
-		Latest:   infos[len(infos)-1],
+	result, err := GetSpeaiclPackageService(ctx.Param("name"))
+	if err != nil {
+		FailBadRequest(ctx, map[string]any{"msg": err.Error()})
+		return
 	}
 
 	Success(ctx, result)
@@ -122,7 +83,7 @@ func DownloadSpeaiclPackageVersionController(ctx *gin.Context) {
 	ll("版本路径 :" + filePath)
 	tempPackageInfo := readPackageVersion(filePath)
 	if tempPackageInfo == nil {
-		FailBadRequest(ctx, map[string]any{
+		FailNotFound(ctx, map[string]any{
 			"msg": "Not Found",
 		})
 

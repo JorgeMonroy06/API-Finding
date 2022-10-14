@@ -1,0 +1,1 @@
+nohup ./pub_server_go > log.log 2>&1 &

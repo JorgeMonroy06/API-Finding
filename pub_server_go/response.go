@@ -51,7 +51,7 @@ func FailBadRequest(ctx *gin.Context, content map[string]any) {
 	ctx.JSON(http.StatusBadRequest, gin.H(content))
 }
 func FailNotFound(ctx *gin.Context, content map[string]any) {
-	ctx.JSON(http.StatusBadRequest, gin.H(content))
+	ctx.JSON(http.StatusNotFound, gin.H(content))
 }
 
 func FailInUploadFile(ctx *gin.Context, content string) {

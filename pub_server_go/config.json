@@ -1,7 +1,7 @@
 {
-    "port": "8008",
-    "webPort": "80",
-    "path": "E:\\flutter_repo",
+    "port": "6453",
+    "webPort": "6454",
+    "path": "E:\\flutter_repo_bak\\flutter_repo_2022_03_14\\flutter_repo",
     "weWorkKey": "",
     "canUpload": true 
 }

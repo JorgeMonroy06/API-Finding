@@ -1,6 +1,6 @@
 # Flutter私有库管理
 
-使用gin框架,基于go语言编写,使用前请先配置config.json文件
+使用gin框架,基于go语言编写
 
 ```
 {
@@ -10,4 +10,11 @@
     "weWorkKey": "", //企业微信机器人推送的key
     "canUpload": true //是否可以上传包
 }
+```
+
+## 运行
+
+```shell
+chmod 774 pub_server_go
+bash run.sh
 ```

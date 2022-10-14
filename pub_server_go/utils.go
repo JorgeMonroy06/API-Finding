@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/ghodss/yaml"
 	"io"
 	"log"
 	"math/rand"
@@ -14,6 +13,9 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"time"
+
+	"github.com/ghodss/yaml"
 )
 
 type FileName struct {
@@ -21,7 +23,7 @@ type FileName struct {
 	Path string
 }
 
-func listDir(path string) []FileName {
+func ListDir(path string) []FileName {
 
 	f, err := os.Open(path)
 	if err != nil {
@@ -51,8 +53,13 @@ func getLastedPackageVersion(path string) (string, string) {
 	if err != nil {
 		return "", ""
 	}
+
 	files, err := f.Readdir(0)
 	if err != nil {
+		return "", ""
+	}
+
+	if len(files) == 0 {
 		return "", ""
 	}
 	sort.Slice(files, func(i, j int) bool {
@@ -198,4 +205,14 @@ func WriteFile(content map[string]any, path string) error {
 
 func ll(content any) {
 	log.Println(content)
+}
+
+func GetFileModTime(path string) time.Time {
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		return time.Now()
+	}
+	return fi.ModTime()
+
 }
