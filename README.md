@@ -48,49 +48,7 @@ http://ip:port/packages/<package-name>/versions/<version-name>.tar.gz //下载�
 
 ### 服务端部署
 
-> 0. 注意点: 务必保证服务器编码为utf8 编译前最好对系统依赖库执行一下update
-
-> 1. 下载最新版dart的sdk, 并配置环境变量, 保证在任意目录可以执行dart, 添加大陆地区的镜像源(自行google) 
-```shell script
-1. https://dart.dev/tools/sdk/archive 选择对应版本
-2. wget https://storage.googleapis.com/dart-archive/channels/stable/release/2.13.1/sdk/dartsdk-linux-x64-release.zip
-3. unzip dartsdk-linux-x64-release.zip
-4. export PATH=$PATH:./dart-sdk/bin
-5. export PUB_HOSTED_URL=https://pub.flutter-io.cn
-
-```
-
-> 2. clone 源码, cd 到源码根目录, 执行 pub get
-
-> 3. 修改 ./example/example.dart 中的
-```dart
-
-host (修改为自己的私服地址)
-
-webHookKey (企业微信推送需要配置,如果需要修改推送内容,请查看push.dart源码)
-
-
-更多详细的配置,查看 argsParser() 方法
-
-ArgParser argsParser() {
-  var parser = ArgParser();
-
-  //配置私有库存放路径
-  parser.addOption('directory', abbr: 'd', defaultsTo: '/opt/flutter_repo');
-  //配置host
-  parser.addOption('host', abbr: 'h', defaultsTo: host);
-  //配置端口
-  parser.addOption('port', abbr: 'p', defaultsTo: '6453');
-  parser.addFlag('standalone', abbr: 's', defaultsTo: false);
-  return parser;
-}
-
-
-```
-
-> 4. terimal执行 ./pub_server_run.sh 即可完成部署
-
-> 5. 运行后日志会保存在当前目录下的log.log文件,可自行查看
+![点击这里查看](https://github.com/jiang111/pub_server/blob/master/pub_server_go/README.md)
 
 ### web端部署
 查看 https://github.com/jiang111/pub_server/tree/master/flutter_pub_web 导出静态文件,然后部署在web服务器即可, 具体操作参考flutter web相关构建方法
