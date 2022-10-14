@@ -1,6 +1,13 @@
 # Flutter私有库管理
 
-使用gin框架,基于go语言编写,运行之前新增 config.json 文件到 pub_server_go 同级目录,配置如下
+使用gin框架,基于go语言编写
+
+
+
+1.下载 [pub_server_go](https://github.com/jiang111/pub_server/raw/master/pub_server_go/pub_server_go)文件,上传到linux服务器
+
+
+2.新增 config.json 文件到 pub_server_go 同级目录,配置如下
 
 ```
 {
@@ -12,11 +19,15 @@
 }
 ```
 
-## 运行
+3. 修改pub_server_go权限
 
-已经生成好linux端可执行文件 pub_server_go 直接运行即可
-
-```shell
+```
 chmod 774 pub_server_go
-bash run.sh
+```
+
+
+4.运行
+
+```
+nohup ./pub_server_go > log.log 2>&1 &
 ```
