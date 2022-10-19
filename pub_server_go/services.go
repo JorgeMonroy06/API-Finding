@@ -39,7 +39,7 @@ func GetAllPackagesService() ([]packageBean, error) {
 		first := GetFileModTime(filepath.Join(config.Path, packages[i].Title))
 		second := GetFileModTime(filepath.Join(config.Path, packages[j].Title))
 
-		return first.After(second)
+		return first.Before(second)
 	})
 	return packages, ctx.Err()
 

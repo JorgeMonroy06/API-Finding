@@ -66,6 +66,14 @@ func getLastedPackageVersion(path string) (string, string) {
 		return files[i].Name() > files[j].Name()
 	})
 
+	sort.Slice(files, func(i, j int) bool {
+
+		first := files[i].ModTime()
+		second := files[j].ModTime()
+
+		return first.After(second)
+	})
+
 	return filepath.Join(path, files[0].Name()), files[0].Name()
 }
 
@@ -172,6 +180,60 @@ func ReadYamlFromZipFile(path string) map[string]any {
 
 }
 
+func ReadReadMeFromZipFile(path string) string {
+	file, err := os.Open(path)
+	if err != nil {
+		return ""
+	}
+	defer file.Close()
+	r, err := gzip.NewReader(file)
+
+	if err != nil {
+		return ""
+	}
+
+	defer r.Close()
+
+	tr := tar.NewReader(r)
+
+	for {
+
+		h, err := tr.Next()
+		if err != nil {
+			return ""
+		}
+
+		if h.Name == "README.md" {
+
+			ll("压缩包中获取到上传文件中的readme内容")
+			tempYamlName := "./" + fmt.Sprint(rand.Intn(10000)) + h.Name
+			tempYamlFile, err := os.Create(tempYamlName)
+			if err != nil {
+				return ""
+			}
+			defer os.Remove(tempYamlName)
+			defer tempYamlFile.Close()
+
+			if _, err := io.Copy(tempYamlFile, tr); err != nil {
+				return ""
+			}
+
+			if err != nil {
+				return ""
+			}
+
+			yamlFileContent, err := os.ReadFile(tempYamlName)
+			if err != nil {
+				return ""
+			}
+
+			return string(yamlFileContent)
+
+		}
+	}
+
+}
+
 func CheckExistVersion(name string, version string) bool {
 
 	fullPath := filepath.Join(config.Path, name, version, "package.tar.gz")
@@ -197,6 +259,15 @@ func WriteFile(content map[string]any, path string) error {
 	}
 
 	err = os.WriteFile(path, bytes, 0666)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func WriteFileWithString(content string, path string) error {
+
+	err := os.WriteFile(path, []byte(content), 0666)
 	if err != nil {
 		return err
 	}

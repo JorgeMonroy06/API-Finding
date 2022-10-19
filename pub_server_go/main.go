@@ -64,5 +64,4 @@ func main() {
 		WriteTimeout: 1000 * time.Second,
 	}
 	s.ListenAndServe()
-
 }

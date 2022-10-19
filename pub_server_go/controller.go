@@ -130,6 +130,10 @@ func UploadPackageController(ctx *gin.Context) {
 	//开始处理文件
 
 	yamlContent := ReadYamlFromZipFile(tempDst)
+	readmeContent := ReadReadMeFromZipFile(tempDst)
+	if readmeContent == "" {
+		readmeContent = "请在项目根目录添加README.md文件"
+	}
 
 	os.Remove(tempDst)
 	if yamlContent == nil {
@@ -162,6 +166,13 @@ func UploadPackageController(ctx *gin.Context) {
 	if err != nil {
 		os.RemoveAll(realDstPath)
 		FailInUploadFile(ctx, "can not generate pubspec")
+		return
+	}
+
+	err = WriteFileWithString(readmeContent, filepath.Join(realDstPath, "README.md"))
+	if err != nil {
+		os.RemoveAll(realDstPath)
+		FailInUploadFile(ctx, "can not generate readme.md")
 		return
 	}
 	ll("开始准备写压缩包文件:" + realDstFileName)
