@@ -1,5 +1,8 @@
 # Self-hosted private Dart Pub server for Enterprise
 
+
+[中文](https://github.com/jiang111/pub_server/blob/master/README-ZH.md)
+
 ### Folder Structure
 |Folder|action|
 |--|--|
