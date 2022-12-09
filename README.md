@@ -15,19 +15,15 @@
 
 > 0. in pubspec.yaml add: publish_to: http://ip:port
 
-> 1. windows download[file](https://github.com/jiang111/pub_server/raw/master/pub_publisher/bin/publite.exe), add  publite to path,in your terminal ,run:
+> 1. windows download[file](https://github.com/jiang111/pub_server/raw/master/pub_publisher/bin/publite.exe),Mac download[file](https://github.com/jiang111/pub_server/raw/master/pub_publisher/bin/publite), add  publite to path,in your terminal ,run:
 
 ```
 publite E:\coding\my_app
 ```
 
+> 2. Check whether the warehouse is released successfully, ,call http://ip:port/api/getAllPackages 
 
-> 2. Mac/Linux copy this code to your project https://github.com/jiang111/pub_server/blob/master/pub_publisher/lib/pub_publisher.dart and run it
-
-
-> 3. Check whether the warehouse is released successfully, ,call http://ip:port/api/getAllPackages 
-
-> 4. how to depend:
+> 3. how to depend:
 
 ```
   package_name:
