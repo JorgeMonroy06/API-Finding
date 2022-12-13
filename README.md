@@ -15,7 +15,7 @@
 
 > 0. in pubspec.yaml add: publish_to: http://ip:port
 
-> 1. windows download[file](https://github.com/jiang111/pub_server/raw/master/pub_publisher/bin/publite.exe),Mac download[file](https://github.com/jiang111/pub_server/raw/master/pub_publisher/bin/publite), add  publite to path,in your terminal ,run:
+> 1. windows download [file](https://github.com/jiang111/pub_server/raw/master/pub_publisher/bin/publite.exe),Mac download [file](https://github.com/jiang111/pub_server/raw/master/pub_publisher/bin/publite), add  publite to path,in your terminal ,run:
 
 ```
 publite E:\coding\my_app
