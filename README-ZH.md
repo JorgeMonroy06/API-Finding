@@ -15,7 +15,7 @@
 > 1. windows用户下载[文件](https://github.com/jiang111/pub_server/raw/master/pub_publisher/bin/publite.exe), Mac 用户下载[文件](https://github.com/jiang111/pub_server/raw/master/pub_publisher/bin/publite), 把 publite 添加到环境变量,在命令行执行这个文件,比如:
  
 ```
-publite E:\coding\my_app
+publite E:\coding\my_app //后面是你项目的全路径
 ```
 
 
