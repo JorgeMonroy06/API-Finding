@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"math/rand"
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/gin-gonic/gin"
 )
 
 func GetAllPackagesController(c *gin.Context) {
@@ -23,8 +22,7 @@ func GetAllPackagesController(c *gin.Context) {
 
 }
 
-func GetSpeaiclPackageController(ctx *gin.Context) {
-
+func GetSpecialPackageController(ctx *gin.Context) {
 	result, err := GetSpeaiclPackageService(ctx.Param("name"))
 	if err != nil {
 		FailBadRequest(ctx, map[string]any{"msg": err.Error()})
@@ -35,7 +33,7 @@ func GetSpeaiclPackageController(ctx *gin.Context) {
 
 }
 
-func GetSpeaiclPackageVersionController(ctx *gin.Context) {
+func GetSpecialPackageVersionController(ctx *gin.Context) {
 	ll("开始执行GetSpeaiclPackageVersionController")
 	name := ctx.Param("name")
 	version := ctx.Param("version")

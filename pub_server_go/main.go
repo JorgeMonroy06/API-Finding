@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/gin-contrib/timeout"
 	"log"
 	"net/http"
 	"os"
@@ -41,6 +42,22 @@ func init() {
 
 }
 
+func timeoutMiddleware() gin.HandlerFunc {
+
+	ll("开始设置超时时间，接口默认1min")
+	return timeout.New(
+		timeout.WithTimeout(1*time.Minute),
+		timeout.WithHandler(func(c *gin.Context) {
+			c.Next()
+		}),
+		timeout.WithResponse(timeoutResponse),
+	)
+}
+func timeoutResponse(c *gin.Context) {
+	ll("该接口超时，自动关闭")
+	c.String(http.StatusRequestTimeout, "timeout")
+}
+
 func main() {
 
 	bytes, err := os.ReadFile("./config.json")
@@ -55,6 +72,7 @@ func main() {
 	r := gin.Default()
 	r.Use(LoggerToFile())
 	r.Use(Cors())
+	r.Use(timeoutMiddleware())
 
 	RegisterRoutes(r)
 	s := &http.Server{

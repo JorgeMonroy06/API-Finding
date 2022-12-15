@@ -21,8 +21,8 @@ func RegisterRoutes(r *gin.Engine) {
 	})
 
 	r.GET(GetAllPackages, GetAllPackagesController)
-	r.GET(GetPackage, GetSpeaiclPackageController)
-	r.GET(GetPackageVersion, GetSpeaiclPackageVersionController)
+	r.GET(GetPackage, GetSpecialPackageController)
+	r.GET(GetPackageVersion, GetSpecialPackageVersionController)
 	r.GET(GetUploadUrl, GetUploadUrlController)
 	r.GET(FinishUploadPackage, FinishUploadPackageController)
 	r.GET(DownloadPackage, DownloadSpeaiclPackageVersionController)
