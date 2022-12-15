@@ -8,7 +8,7 @@
 |--|--|
 |flutter_pub_web|web code|
 |pub_publisher|Send source code to private server|
-|pub_server_go|Private server backend source code, based on go implementation, faster and more stable|
+|pub_server_go|Private server backend source code, based on go , faster and more stable|
 
 
 ### Client 
