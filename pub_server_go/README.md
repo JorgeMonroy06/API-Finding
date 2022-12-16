@@ -2,9 +2,28 @@
 
 使用gin框架,基于go语言编写
 
+1.使用wget下载文件
+
+Installing Wget on Ubuntu and Debian #
+```
+$sudo apt install wget
+```
+
+Installing Wget on CentOS and Fedora
+```
+$sudo yum install wget
+```
 
 
-1.下载 [pub_server_go](https://github.com/jiang111/pub_server/raw/master/pub_server_go/pub_server_go)文件,上传到linux服务器
+
+
+1.下载 [pub_server_go](https://github.com/jiang111/pub_server/raw/master/pub_server_go/pub_server_go)文件
+
+```
+wget https://github.com/jiang111/pub_server/raw/master/pub_server_go/pub_server_go
+```
+
+
 
 
 2.新增 config.json 文件到 pub_server_go 同级目录,配置如下
