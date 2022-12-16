@@ -50,7 +50,7 @@ http://ip:port/packages/<package-name>/versions/<version-name>.tar.gz //下载�
 
 ### web端部署
 
-[点我查看]([https://github.com/jiang111/pub_server/blob/master/pub_server_go/README.md](https://github.com/jiang111/pub_server/tree/master/flutter_pub_web))
+[点我查看]([https://github.com/jiang111/pub_server/blob/master/pub_server_go/README.md](https://github.com/jiang111/pub_server/tree/master/flutter_pub_web)
 
 
 
