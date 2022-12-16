@@ -49,7 +49,9 @@ http://ip:port/packages/<package-name>/versions/<version-name>.tar.gz //下载�
 [点我查看](https://github.com/jiang111/pub_server/blob/master/pub_server_go/README.md)
 
 ### web端部署
-查看 https://github.com/jiang111/pub_server/tree/master/flutter_pub_web 导出静态文件,然后部署在web服务器即可, 具体操作参考flutter web相关构建方法
+
+[点我查看]([https://github.com/jiang111/pub_server/blob/master/pub_server_go/README.md](https://github.com/jiang111/pub_server/tree/master/flutter_pub_web))
+
 
 
 [![Stargazers over time](https://starchart.cc/jiang111/pub_server.svg)](https://starchart.cc/jiang111/pub_server)
