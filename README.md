@@ -50,8 +50,9 @@ http://ip:port/packages/<package-name>/versions/<version-name>.tar.gz //download
 
 [click me](https://github.com/jiang111/pub_server/blob/master/pub_server_go/README.md)
 
-### web deploy
-goto https://github.com/jiang111/pub_server/tree/master/flutter_pub_web use flutter web command
+### Web deploy
+
+[click me](https://github.com/jiang111/pub_server/tree/master/flutter_pub_web)
 
 
 [![Stargazers over time](https://starchart.cc/jiang111/pub_server.svg)](https://starchart.cc/jiang111/pub_server)
