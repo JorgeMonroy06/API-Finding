@@ -4,11 +4,12 @@
 [中文](https://github.com/jiang111/pub_server/blob/master/README-ZH.md)
 
 ### Folder Structure
-|Folder|action|
-|--|--|
-|flutter_pub_web|web code|
-|pub_publisher|Send source code to private server|
-|pub_server_go|Private server backend source code, based on go , faster and more stable|
+|Folder|Deploy|Action|
+|--|--|--|
+|flutter_pub_web|[Web Deploy](https://github.com/jiang111/pub_server/tree/master/flutter_pub_web)|web code|
+|pub_publisher|Client|Send source code to private server|
+|pub_server_go|[Server Deploy](https://github.com/jiang111/pub_server/blob/master/pub_server_go/README.md)|Private server backend source code, based on go , faster and more stable|
+
 
 
 ### Client 
@@ -45,11 +46,6 @@ http://ip:port/packages/<package-name>/versions/<version-name>.tar.gz //download
 ```
 
 > 6. GUI deploy https://github.com/jiang111/pub_server/tree/master/flutter_pub_web
-
-### [Server Deploy](https://github.com/jiang111/pub_server/blob/master/pub_server_go/README.md)
-
-
-### [Web Deploy](https://github.com/jiang111/pub_server/tree/master/flutter_pub_web)
 
 
 
