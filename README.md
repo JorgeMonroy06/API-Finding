@@ -46,13 +46,11 @@ http://ip:port/packages/<package-name>/versions/<version-name>.tar.gz //download
 
 > 6. GUI deploy https://github.com/jiang111/pub_server/tree/master/flutter_pub_web
 
-### Server deploy
+### [Server Deploy](https://github.com/jiang111/pub_server/blob/master/pub_server_go/README.md)
 
-[click me](https://github.com/jiang111/pub_server/blob/master/pub_server_go/README.md)
 
-### Web deploy
+### [Web Deploy](https://github.com/jiang111/pub_server/tree/master/flutter_pub_web)
 
-[click me](https://github.com/jiang111/pub_server/tree/master/flutter_pub_web)
 
 
 [![Stargazers over time](https://starchart.cc/jiang111/pub_server.svg)](https://starchart.cc/jiang111/pub_server)
