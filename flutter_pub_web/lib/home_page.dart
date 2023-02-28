@@ -10,7 +10,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-/// @author newtab on 2021/5/7
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -39,6 +39,47 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Container(
+          alignment: Alignment.topCenter,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              AppBar(
+                backgroundColor: Color(0xff1c2834),
+                elevation: 0,
+                centerTitle: true,
+                leading: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                  child: FlutterLogo(),
+                ),
+                title: Text(
+                  APP_TIELE,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                  ),
+                ),
+                actions: [
+                  InkWell(
+                    child: Center(
+                      child: Text(
+                        "Help",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    onTap: () async {
+                      await launch("https://github.com/jiang111/pub_server/blob/master/README.md");
+                    },
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                ],
+              ),
+              Container(
           alignment: Alignment.topCenter,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
