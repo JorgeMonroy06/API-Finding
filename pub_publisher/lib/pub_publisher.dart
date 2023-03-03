@@ -30,12 +30,6 @@ void main(List<String> args) {
   String rootDir = '';
   if (args.isNotEmpty) {
     rootDir = args.first;
-  }
-  PubPublisher(rootDir).run();
-}
-
-class PubPublisher {
-  static const maxSize = 100 * 1024 * 1024;
   final Git git = Git();
   final pubApiHeaders = {'Accept': 'application/vnd.pub.v2+json'};
 
